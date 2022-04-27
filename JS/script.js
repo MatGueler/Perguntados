@@ -1,8 +1,11 @@
 // VARIAVEIS GLOBAIS
-let pontuacaojogador = 0;
+let pontuacaojogadores = [];
+let jogadorSorteado;
 let elementoSorteado;
 let listaJogadores = []
+let jogadoresAtualizados = listaJogadores
 let listaObjetos = []
+let limiteJogadas;
 
 // LISTA PRENDAS
 
@@ -103,8 +106,16 @@ let prendas = [
 ]
 
 function iniciar() {
-    perguntarJogadores()
-    criarObjeto()
+    let querJogar = document.querySelector("body")
+    querJogar.innerHTML =
+        `
+    <main class = "pergunta-comecar">
+        <div class = "caixa-iniciar">
+        <h1>Quer começar?</h1>
+        <button class = "botao-jogar" onclick = "perguntarJogadores()">Vamos lá</button>
+        </div>
+    </main>
+    `
 }
 
 function telaInicial() {
@@ -135,9 +146,27 @@ function telaInicial() {
 }
 
 function sortearJogador() {
-    let jogadorSorteado = listaJogadores[Math.floor(Math.random() * listaJogadores.length)]
-    let caixaJogador = document.querySelector(".caixa-jogador")
-    caixaJogador.innerHTML = `<h1>É a vez de ${jogadorSorteado}</h1>`
+    if (listaObjetos.length <= (prendas.length - limiteJogadas)) {
+        mostrarRanking()
+        alert("Você finalizou as perguntas")
+    }
+    else{
+        if (jogadoresAtualizados.length === 0) {
+            jogadoresAtualizados = listaJogadores
+        }
+        jogadorSorteado = jogadoresAtualizados[Math.floor(Math.random() * jogadoresAtualizados.length)]
+        let caixaJogador = document.querySelector(".caixa-jogador")
+        caixaJogador.innerHTML = `<h1>É a vez de ${jogadorSorteado}</h1>`
+        let jogadoresRetirados = jogadoresAtualizados.filter(retirarJogador)
+        jogadoresAtualizados = jogadoresRetirados
+        console.log(jogadoresAtualizados)
+    }
+}
+
+function retirarJogador(elemento) {
+    if (elemento !== jogadorSorteado) {
+        return true
+    }
 }
 
 function girarCarta() {
@@ -154,7 +183,11 @@ function girarCarta() {
 function responder(resposta) {
     let cartaSelecionada = document.querySelector(".caixa-carta")
     if (resposta === 1) {
-        pontuacaojogador += 1
+        pontuacaojogadores = listaJogadores.map(function (elemento, indice) {
+            if (elemento === jogadorSorteado) {
+                return (pontuacaojogadores[indice] + 1)
+            } else { return pontuacaojogadores[indice] }
+        })
     }
     let botaoRespostas = document.querySelector(".botoes-feito").classList.add("desativar")
     let girarVerso = document.querySelector(".caixa-carta > .verso").classList.toggle("girar-verso")
@@ -179,13 +212,10 @@ function sortear() {
     let preencherResposta = document.querySelector("main > .resposta")
     preencherResposta.classList.remove("desativar")
     preencherVerso.innerHTML = `<h1>${elementoSorteado.question}</h1>`
-    preencherResposta.innerHTML = `<button onclick = "checar()">Checar</button><h1 class ="desativar">${elementoSorteado.answers}</h1>`
+    preencherResposta.innerHTML = `<button onclick = "checar()">Checar</button><h1 class =" respostaCorreta desativar">${elementoSorteado.answers}</h1>`
     console.log(elementoSorteado.answers)
     let prendasAtualizadas = listaObjetos.filter(tirarSorteada)
     listaObjetos = prendasAtualizadas
-    if (listaObjetos.length === 0) {
-        alert("Você finalizou as perguntas")
-    }
 }
 
 // HABILITA A RESPOSTA E ESCONDE O BOTÃO
@@ -202,11 +232,21 @@ function tirarSorteada(elemento) {
 
 function perguntarJogadores() {
     let qtdJogadores = prompt("Quantos vão jogar?")
+    while (isNaN(qtdJogadores)) {
+        console.log(isNaN(qtdJogadores))
+        qtdJogadores = prompt("Quantos vão jogar?")
+    }
+    limiteJogadas = Math.floor(prendas.length/qtdJogadores)*qtdJogadores
+    console.log(limiteJogadas)
     for (let contador = 0; contador < qtdJogadores; contador++) {
         let nome = prompt(`Nome do jogador ${contador + 1}`)
         listaJogadores.push(nome)
+        pontuacaojogadores.push(0)
     }
-    telaInicial()
+    carregando()
+    setTimeout(function () {
+        criarObjeto()
+    }, 3000)
 }
 
 // CRIAR OBJETO PERGUNTA E RESPOSTA
@@ -219,6 +259,50 @@ function criarObjeto() {
         listaObjetos.push(objeto)
 
     }
+    telaInicial()
+}
+
+// RANKING
+
+
+
+function mostrarRanking() {
+    let corpoRanking = document.querySelector("body")
+    corpoRanking.innerHTML =
+        `
+    <main class = "pergunta-comecar">
+        <div class = "caixa-iniciar-ranking">
+        <div class = "ranking">
+        <h1>Jogador</h1><h1>Acertos</h1>
+        </div>
+        </div>
+    </main>
+    `
+    let ranking = document.querySelector(".caixa-iniciar-ranking")
+    for (let contador = 0; contador < listaJogadores.length; contador++) {
+        ranking.innerHTML +=
+            `
+        <div class = "ranking">
+        <h1>${listaJogadores[contador]}</h1><h1>${pontuacaojogadores[contador]}</h1>
+        </div>
+        `
+    }
+}
+
+// CARREGANDO
+function carregando() {
+    let querJogar = document.querySelector("body")
+    querJogar.innerHTML =
+        `
+    <main class = "pergunta-comecar">
+        <img src="/Imagens/Ellipsis-1s-200px.gif">
+    </main>
+    `
+}
+
+// CARREGOU
+function carregou() {
+
 }
 
 // CHAMAR FUNÇOES

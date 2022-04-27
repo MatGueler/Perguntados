@@ -1,13 +1,44 @@
 /* BODY */
+@import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
+
+body {
+  font-family: 'Lobster', cursive;
+}
+
+/* MAIN */
 main {
   height: 100%;
   width: 100%;
   position: absolute;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  /* justify-content: center; */
   align-items: center;
   background-color: rgb(180, 180, 180);
+}
+
+.pergunta-comecar{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* CAIXA INICIAR SE QUER JOGAR */
+.caixa-iniciar{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.caixa-iniciar > h1{
+  font-size: 100px;
+}
+
+.caixa-iniciar > button{
+  font-size: 60px;
+  margin-top: 50px;
+  border-radius: 10px;
 }
 
 /* CARTINHA */
@@ -22,16 +53,17 @@ main {
   cursor: pointer;
 }
 
-.caixa-carta img{
+.caixa-carta img {
   width: 100%;
   margin: 0 10px;
   object-fit: cover;
 }
 
-.caixa-carta h1{
-  width: 250px;
-  font-size: 50px;
+.verso>h1 {
+  width: 100%;
+  font-size: 40px;
   text-align: center;
+  margin: 0 30px;
 }
 
 .face {
@@ -64,51 +96,88 @@ main {
 
 
 /* BOTOES RESPOSTA */
-.botoes-feito > button{
+.botoes-feito>button {
   width: 200px;
   height: 150px;
   font-size: 30px;
   border-radius: 50px;
-  margin: 30px;
+  margin: 20px 30px 0 30px;
   cursor: pointer;
 }
 
-.feito{
+.feito {
   background-color: rgb(42, 153, 42);
 }
 
-.bebeu{
+.bebeu {
   background-color: orange;
 }
 
-.container{
-  position: absolute;
-  top: 200px;
+.container {
   display: flex;
   flex-direction: column;
-  align-items: center
+  align-items: center;
 }
 
-.caixa-jogador{
-  position: absolute;
-  top: 60px;
-  margin-bottom: 30px;
+.caixa-jogador {
+  margin: 20px 0;
 }
 
-.caixa-jogador > h1{
+.caixa-jogador>h1 {
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
   font-size: 80px;
 }
 
 /* RESPOSTA */
-.resposta{
-  position: absolute;
-  bottom: 200px;
-  z-index: 1;
+.resposta {
+  width: 100%;
+  height: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 40px;
+}
+
+.resposta>button {
+  width: 100px;
+  height: 100%;
+  border-radius: 10px;
+}
+
+.respostaCorreta {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 40px;
   background-color: rgb(112, 112, 255);
 }
 
-.resposta > h1{
-  font-size: 40px;
+/* RANKING */
+
+.caixa-iniciar-ranking{
+  width: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: green;
+}
+
+.ranking{
+  width: 100%;
+  display: flex;
+}
+
+.ranking > h1{
+  width: 100%;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 50px;
+  border: solid 1px black;
 }
 
 
@@ -128,6 +197,6 @@ main {
 
 
 /* DESATIVAR */
-.desativar{
+.desativar {
   display: none;
 }
