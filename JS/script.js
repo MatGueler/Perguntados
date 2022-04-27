@@ -128,7 +128,7 @@ function telaInicial() {
             <div class="caixa-carta" onclick="girarCarta()">
                 <div class="frente face">
                     <!-- <h1>Frente</h1> -->
-                    <img src="/CSV/Logo_MATEUS.png">
+                    <img src="./CSV/Logo_MATEUS.png">
                 </div>
                 <div class="verso face">
                     <h1></h1>
@@ -295,7 +295,7 @@ function carregando() {
     querJogar.innerHTML =
         `
     <main class = "pergunta-comecar">
-        <img src="/Imagens/Ellipsis-1s-200px.gif">
+        <img src="./Imagens/Ellipsis-1s-200px.gif">
     </main>
     `
 }
